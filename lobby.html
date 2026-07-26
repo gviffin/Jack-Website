@@ -214,7 +214,7 @@ var LOBBY_TEXT = {
 
 /* ================= renderer / scene / camera ================= */
 var app=document.getElementById('app');
-var renderer=new THREE.WebGLRenderer({antialias:true, preserveDrawingBuffer:true});
+var renderer=new THREE.WebGLRenderer({antialias:true});
 renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
 renderer.setSize(window.innerWidth, window.innerHeight);
 if('outputColorSpace' in renderer) renderer.outputColorSpace=THREE.SRGBColorSpace;
