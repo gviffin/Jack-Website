@@ -257,12 +257,14 @@ function radialTex(){ var c=document.createElement('canvas'); c.width=c.height=2
   x.fillStyle=g; x.fillRect(0,0,256,256);
   var t=new THREE.CanvasTexture(c); t.minFilter=THREE.LinearFilter; t.magFilter=THREE.LinearFilter; t.generateMipmaps=false; if('colorSpace' in t) t.colorSpace=THREE.SRGBColorSpace; return t; }
 var glowTex=radialTex();
+/* phones dither smooth additive gradients into coloured speckle — hide the glow sprites there (real lights still light the scene) */
+var IS_MOBILE=!!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
 function glow(x,y,z,ry,scale,color,op){ var m=new THREE.Mesh(new THREE.PlaneGeometry(1,1),
-  new THREE.MeshBasicMaterial({map:glowTex,color:color,transparent:true,opacity:(op==null?1:op),blending:THREE.AdditiveBlending,depthWrite:false,toneMapped:false}));
-  m.position.set(x,y,z); m.rotation.y=ry; m.scale.set(scale,scale,scale); scene.add(m); return m; }
+  new THREE.MeshBasicMaterial({map:glowTex,color:color,transparent:true,opacity:(op==null?1:op),blending:THREE.AdditiveBlending,depthWrite:false,toneMapped:false,dithering:true}));
+  m.position.set(x,y,z); m.rotation.y=ry; m.scale.set(scale,scale,scale); m.visible=!IS_MOBILE; scene.add(m); return m; }
 function glowFloor(x,z,scale,color,op){ var m=new THREE.Mesh(new THREE.PlaneGeometry(1,1),
-  new THREE.MeshBasicMaterial({map:glowTex,color:color,transparent:true,opacity:(op==null?1:op),blending:THREE.AdditiveBlending,depthWrite:false,toneMapped:false}));
-  m.position.set(x,0.02,z); m.rotation.x=-Math.PI/2; m.scale.set(scale,scale,scale); scene.add(m); return m; }
+  new THREE.MeshBasicMaterial({map:glowTex,color:color,transparent:true,opacity:(op==null?1:op),blending:THREE.AdditiveBlending,depthWrite:false,toneMapped:false,dithering:true}));
+  m.position.set(x,0.02,z); m.rotation.x=-Math.PI/2; m.scale.set(scale,scale,scale); m.visible=!IS_MOBILE; scene.add(m); return m; }
 
 /* --- artwork textures --- */
 function placeholderTex(w){ var c=document.createElement('canvas'); c.width=384;c.height=512; var x=c.getContext('2d');
@@ -537,7 +539,7 @@ var carousel=new THREE.Group(); carousel.position.set(0,3.75,0); scene.add(carou
       if(aspect>pa){ tex.repeat.x=pa/aspect; tex.offset.x=(1-tex.repeat.x)/2; } else { tex.repeat.y=aspect/pa; tex.offset.y=(1-tex.repeat.y)/2; }
       m2.map=tex; m2.emissiveMap=tex; m2.needsUpdate=true; }; })(mat));
   }
-  var ring=new THREE.Mesh(new THREE.TorusGeometry(R,0.025,8,64), new THREE.MeshBasicMaterial({color:0xffd9a0,transparent:true,opacity:0.45,blending:THREE.AdditiveBlending,depthWrite:false,toneMapped:false}));
+  var ring=new THREE.Mesh(new THREE.TorusGeometry(R,0.025,8,64), new THREE.MeshBasicMaterial({color:0xffd9a0,transparent:true,opacity:0.45,blending:THREE.AdditiveBlending,depthWrite:false,toneMapped:false,dithering:true}));
   ring.rotation.x=Math.PI/2; carousel.add(ring);
   glow(0,3.75,0,0,5,0xffd9a0,0.28);
 })();
@@ -548,7 +550,7 @@ var fireflies=(function(){
   for(var i=0;i<N;i++){ pos[i*3]=(Math.random()-0.5)*2*(LB-1.2); pos[i*3+1]=0.4+Math.random()*(CH-1.4); pos[i*3+2]=(Math.random()-0.5)*2*(LB-1.2); spd[i]=0.12+Math.random()*0.28; ph[i]=Math.random()*6.28; }
   g.setAttribute('position',new THREE.BufferAttribute(pos,3));
   var c=document.createElement('canvas'); c.width=c.height=32; var x=c.getContext('2d'); var gr=x.createRadialGradient(16,16,0,16,16,16); gr.addColorStop(0,'rgba(255,226,150,1)'); gr.addColorStop(1,'rgba(255,226,150,0)'); x.fillStyle=gr; x.fillRect(0,0,32,32);
-  var mat=new THREE.PointsMaterial({map:new THREE.CanvasTexture(c),color:0xffe1a0,size:0.17,transparent:true,opacity:0.85,blending:THREE.AdditiveBlending,depthWrite:false,toneMapped:false});
+  var mat=new THREE.PointsMaterial({map:new THREE.CanvasTexture(c),color:0xffe1a0,size:0.17,transparent:true,opacity:0.85,blending:THREE.AdditiveBlending,depthWrite:false,toneMapped:false,dithering:true});
   var pts=new THREE.Points(g,mat); scene.add(pts);
   return {pts:pts,pos:pos,spd:spd,ph:ph,N:N};
 })();
