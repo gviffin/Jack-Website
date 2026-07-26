@@ -650,6 +650,19 @@ function bLamp(){ var g=new THREE.Group();
 function bRug(){ var g=new THREE.Group();
   var r=new THREE.Mesh(new THREE.CircleGeometry(1.4,40),eStd(0x6e4234,1)); r.rotation.x=-Math.PI/2; r.position.y=0.012; g.add(r);
   var r2=new THREE.Mesh(new THREE.RingGeometry(1.02,1.18,40),eStd(0xb98a4e,1)); r2.rotation.x=-Math.PI/2; r2.position.y=0.014; g.add(r2); return g; }
+function bCoffee(){ var g=new THREE.Group();
+  var top=new THREE.Mesh(rbox(0.9,0.08,0.55),eStd(0x5a3c26,0.6)); top.position.y=0.36; g.add(top);
+  [-1,1].forEach(function(a){[-1,1].forEach(function(b){ var l=new THREE.Mesh(rbox(0.06,0.36,0.06),eStd(0x36261a,0.7)); l.position.set(a*0.4,0.18,b*0.22); g.add(l); });}); return g; }
+function bPouf(){ var g=new THREE.Group();
+  var s=new THREE.Mesh(new THREE.CylinderGeometry(0.28,0.3,0.34,18),eStd(0x8a5a3e,0.96)); s.position.y=0.17; g.add(s);
+  var t=new THREE.Mesh(new THREE.SphereGeometry(0.28,18,10,0,6.28,0,Math.PI/2),eStd(0x8a5a3e,0.96)); t.position.y=0.34; t.scale.y=0.34; g.add(t); return g; }
+function bBooks(){ var g=new THREE.Group(); var cols=[0x7a3b2e,0x3f5b52,0x8a6a3a,0x46465a,0x93502f], y=0;
+  for(var i=0;i<4;i++){ var w=0.28+((i*7)%5)/40, h=0.05+((i*3)%4)/80; var b=new THREE.Mesh(rbox(w,h,0.34),eStd(cols[i%cols.length],0.75)); b.position.set(((i%2)-0.5)*0.05,y+h/2,0); b.rotation.y=((i%2)-0.5)*0.28; g.add(b); y+=h; } return g; }
+function bCat(){ var g=new THREE.Group(), col=0x8a6a4a;
+  var b=new THREE.Mesh(new THREE.SphereGeometry(0.16,14,12),eStd(col,0.85)); b.scale.set(1.4,0.7,1.1); b.position.y=0.11; g.add(b);
+  var h=new THREE.Mesh(new THREE.SphereGeometry(0.09,14,12),eStd(col,0.85)); h.position.set(0.2,0.13,0.06); g.add(h);
+  [-1,1].forEach(function(s){ var e=new THREE.Mesh(new THREE.ConeGeometry(0.03,0.06,5),eStd(col,0.85)); e.position.set(0.2,0.2,0.06+s*0.05); g.add(e); });
+  var tl=new THREE.Mesh(new THREE.TorusGeometry(0.09,0.03,6,10,Math.PI*1.3),eStd(col,0.85)); tl.position.set(-0.16,0.06,0); tl.rotation.x=Math.PI/2; g.add(tl); return g; }
 /* real models from the pack (parsed once, scaled to a real height) */
 var _mCache={};
 function parseOBJs(text){ var P=[],Nn=[],oP=[],oN=[],ls=text.split('\n');
@@ -672,7 +685,35 @@ var FURN_ITEMS=[
   {key:'armchair', label:'Armchair', icon:'🪑', make:bFurn('armchair',0xc2883a,0.92)},
   {key:'table',    label:'Table',    icon:'◯',  make:bFurn('roundtable',0x6a4a2f,0.5)},
   {key:'fireplace',label:'Fireplace',icon:'🔥', make:bFurn('fireplace',0x8f7458,1.3)},
-  {key:'bookcase', label:'Bookcase', icon:'📚', make:bFurn('bookcase',0x6a4a2f,1.95)}
+  {key:'bookcase', label:'Bookcase', icon:'📚', make:bFurn('bookcase',0x6a4a2f,1.95)},
+  {key:'couch',     label:'Couch',      icon:'🛋', make:bFurn('couch',0x9a6550,0.85)},
+  {key:'chair',     label:'Chair',      icon:'💺', make:bFurn('chair',0x8a5a3a,0.9)},
+  {key:'nightstand',label:'Nightstand', icon:'🕯', make:bFurn('nightstand',0x5f4530,0.52)},
+  {key:'desk',      label:'Desk',       icon:'🖥', make:bFurn('desk',0x6a4a2f,0.78)},
+  {key:'drawers',   label:'Dresser',    icon:'🗄', make:bFurn('drawers',0x6a4a2f,0.9)},
+  {key:'diningtable',label:'Big table', icon:'🍽', make:bFurn('diningtable',0x6a4a2f,0.55)},
+  {key:'tallshelf', label:'Tall shelf', icon:'🗃', make:bFurn('tallshelf',0x6a4a2f,1.9)},
+  {key:'bed',       label:'Bed',        icon:'🛏', make:bFurn('bed',0x8a6a4a,0.7)},
+  {key:'bigsofa',   label:'Big sofa',   icon:'🛋', make:bFurn('bigsofa',0xa85f3e,0.8)},
+  {key:'loveseat',  label:'Loveseat',   icon:'🛋', make:bFurn('loveseat',0x6f7a5c,0.72)},
+  {key:'lcouch',    label:'L-couch',    icon:'🛋', make:bFurn('lcouch',0x9a6550,0.85)},
+  {key:'smallcouch',label:'Small couch',icon:'🛋', make:bFurn('smallcouch',0x8a5a3e,0.8)},
+  {key:'barstool',  label:'Bar stool',  icon:'🪑', make:bFurn('barstool',0x6a4a2f,0.75)},
+  {key:'sidetable', label:'Side table', icon:'◯',  make:bFurn('sidetable',0x6a4a2f,0.55)},
+  {key:'dinnertable',label:'Dining table',icon:'🍽', make:bFurn('dinnertable',0x6a4a2f,0.75)},
+  {key:'tallbookshelf',label:'Bookshelf',icon:'📚', make:bFurn('tallbookshelf',0x6a4a2f,1.95)},
+  {key:'wallshelf', label:'Wall shelf', icon:'🗄', make:bFurn('wallshelf',0x6a4a2f,1.9)},
+  {key:'wardrobe',  label:'Wardrobe',   icon:'🧥', make:bFurn('wardrobe',0x6a4a2f,1.95)},
+  {key:'tallboy',   label:'Tall drawers',icon:'🗄', make:bFurn('tallboy',0x6a4a2f,1.1)},
+  {key:'doublebed', label:'Double bed', icon:'🛏', make:bFurn('doublebed',0x8a6a4a,0.6)},
+  {key:'bunkbed',   label:'Bunk bed',   icon:'🛏', make:bFurn('bunkbed',0x8a6a4a,1.7)},
+  {key:'fridge',    label:'Fridge',     icon:'🧊', make:bFurn('fridge',0xcfcfc4,1.8)},
+  {key:'microwave', label:'Microwave',  icon:'🍲', make:bFurn('microwave',0x3a3a3a,0.3)},
+  {key:'realplant', label:'Big plant',  icon:'🌿', make:bFurn('realplant',0x3f6b3a,0.9)},
+  {key:'coffee',    label:'Coffee table',icon:'☕', make:bCoffee},
+  {key:'pouf',      label:'Pouf',       icon:'🟤', make:bPouf},
+  {key:'books',     label:'Books',      icon:'📖', make:bBooks},
+  {key:'cat',       label:'Cat',        icon:'🐈', make:bCat}
 ];
 var FURN_BY_KEY={}; FURN_ITEMS.forEach(function(it){ FURN_BY_KEY[it.key]=it; });
 
