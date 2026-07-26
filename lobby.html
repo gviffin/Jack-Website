@@ -601,7 +601,8 @@ window.addEventListener('pointermove',function(e){ if(editMode){ edMove(e); retu
   yaw-=dx*SET.lookSens; pit-=dy*SET.lookSens; pit=Math.max(-1.05,Math.min(1.05,pit)); });
 /* ================= mobile joystick + swipe-look ================= */
 var joyVec={x:0,y:0}, joyId=null, joyC={x:0,y:0}, JOYR=44;
-var IS_TOUCH=('ontouchstart' in window)||(navigator.maxTouchPoints>0);
+/* only true when the PRIMARY pointer is a finger (phones/tablets) — not desktop Chrome, which fakes touch support */
+var IS_TOUCH=!!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
 (function(){
   var joy=document.getElementById('joy'), knob=document.getElementById('joyknob'); if(!joy) return;
   if(IS_TOUCH){ document.body.classList.add('touch');
