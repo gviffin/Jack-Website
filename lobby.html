@@ -257,14 +257,14 @@ function radialTex(){ var c=document.createElement('canvas'); c.width=c.height=2
   x.fillStyle=g; x.fillRect(0,0,256,256);
   var t=new THREE.CanvasTexture(c); t.minFilter=THREE.LinearFilter; t.magFilter=THREE.LinearFilter; t.generateMipmaps=false; if('colorSpace' in t) t.colorSpace=THREE.SRGBColorSpace; return t; }
 var glowTex=radialTex();
-/* phones dither smooth additive gradients into coloured speckle — hide the glow sprites there (real lights still light the scene) */
-var IS_MOBILE=!!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
+/* Safari/WebKit (iPhone AND Mac) dithers smooth additive gradients into coloured speckle — hide the glow sprites there. Chrome/Firefox render them fine and keep them. */
+var GLOW_OFF=(navigator.vendor||'').indexOf('Apple')>-1;
 function glow(x,y,z,ry,scale,color,op){ var m=new THREE.Mesh(new THREE.PlaneGeometry(1,1),
   new THREE.MeshBasicMaterial({map:glowTex,color:color,transparent:true,opacity:(op==null?1:op),blending:THREE.AdditiveBlending,depthWrite:false,toneMapped:false,dithering:true}));
-  m.position.set(x,y,z); m.rotation.y=ry; m.scale.set(scale,scale,scale); m.visible=!IS_MOBILE; scene.add(m); return m; }
+  m.position.set(x,y,z); m.rotation.y=ry; m.scale.set(scale,scale,scale); m.visible=!GLOW_OFF; scene.add(m); return m; }
 function glowFloor(x,z,scale,color,op){ var m=new THREE.Mesh(new THREE.PlaneGeometry(1,1),
   new THREE.MeshBasicMaterial({map:glowTex,color:color,transparent:true,opacity:(op==null?1:op),blending:THREE.AdditiveBlending,depthWrite:false,toneMapped:false,dithering:true}));
-  m.position.set(x,0.02,z); m.rotation.x=-Math.PI/2; m.scale.set(scale,scale,scale); m.visible=!IS_MOBILE; scene.add(m); return m; }
+  m.position.set(x,0.02,z); m.rotation.x=-Math.PI/2; m.scale.set(scale,scale,scale); m.visible=!GLOW_OFF; scene.add(m); return m; }
 
 /* --- artwork textures --- */
 function placeholderTex(w){ var c=document.createElement('canvas'); c.width=384;c.height=512; var x=c.getContext('2d');
