@@ -1,0 +1,11 @@
+# macOS
+.DS_Store
+
+# Leftover download (the bookshelf is already built into models/bookshelf.js)
+*.zip
+
+# Claude Code local tooling / dev config
+.claude/
+
+# Editors
+.vscode/

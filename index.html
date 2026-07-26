@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jack Griffin — Illustration</title>
+<meta name="description" content="Jack Griffin — illustration & drawing. Enter the gallery.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='%23c8703a'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#efe6d3;--wood:#6b4a2f;--warm:#c8703a;--amber:#E4B04A;--ink:#2a2119;}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+html,body{margin:0;}
+body{color:var(--paper);font-family:'Syne',sans-serif;overflow-x:hidden;
+  background:radial-gradient(150% 55% at 50% 0%, #2b2117 0%, #150f09 52%, #0b0806 100%) fixed,#0b0806;}
+a{color:inherit;}
+header.nav{position:sticky;top:0;z-index:40;display:flex;align-items:center;justify-content:space-between;padding:13px 26px;
+  background:rgba(17,11,6,.72);backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px);border-bottom:1px solid rgba(181,130,78,.22);}
+.brand{font-weight:800;letter-spacing:1px;font-size:18px;cursor:pointer;}
+.brand span{color:var(--warm);}
+nav.links{display:flex;gap:18px;align-items:center;}
+nav.links a{font-weight:700;font-size:12px;letter-spacing:2px;color:#c9b79a;text-decoration:none;cursor:pointer;}
+nav.links a:hover{color:var(--warm);}
+nav.links a.cta{border:2px solid var(--wood);padding:7px 15px;color:var(--paper);}
+nav.links a.cta:hover{background:var(--warm);border-color:var(--warm);color:#fff;}
+.hero{min-height:calc(100vh - 55px);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:36px 24px;position:relative;}
+.frame{background:var(--paper);padding:9px;border:7px solid var(--wood);box-shadow:0 22px 50px rgba(0,0,0,.6),0 0 70px 12px rgba(255,186,112,.2);}
+.spin-scene{width:min(340px,74vw);height:430px;margin-bottom:20px;display:block;cursor:pointer;text-decoration:none;}
+#frame3d{width:100%;height:100%;}
+#frame3d canvas{display:block;width:100%;height:100%;}
+.jp{font-family:'Noto Sans JP',sans-serif;font-weight:700;letter-spacing:6px;color:var(--warm);font-size:15px;}
+h1{font-weight:800;font-size:clamp(40px,8vw,78px);letter-spacing:2px;margin:8px 0 6px;line-height:1;}
+.tag{font-size:13px;letter-spacing:3px;color:#b7a488;}
+.enter{display:inline-block;margin-top:30px;background:var(--paper);border:3px solid var(--wood);color:var(--ink);font-weight:800;font-size:15px;letter-spacing:3px;padding:16px 34px;text-decoration:none;cursor:pointer;transition:.25s;}
+.enter:hover{background:var(--warm);border-color:var(--warm);color:#fff;box-shadow:0 0 42px rgba(255,150,80,.5);}
+.chev{position:absolute;bottom:20px;left:50%;color:#b7a488;font-size:13px;letter-spacing:2px;text-decoration:none;animation:bob 1.7s ease-in-out infinite;}
+@keyframes bob{0%,100%{transform:translate(-50%,0);}50%{transform:translate(-50%,7px);}}
+section{max-width:1120px;margin:0 auto;padding:76px 26px;}
+.shead{display:flex;align-items:baseline;gap:14px;margin-bottom:30px;border-bottom:1px solid rgba(181,130,78,.25);padding-bottom:14px;}
+.shead h2{font-weight:800;font-size:clamp(24px,4vw,34px);margin:0;letter-spacing:1px;}
+.shead .en{font-family:'Noto Sans JP',sans-serif;font-weight:900;color:var(--warm);font-size:16px;}
+.shead .hint{margin-left:auto;font-size:11px;letter-spacing:2px;color:#8a7a5f;}
+.swrap{position:relative;-webkit-mask-image:linear-gradient(90deg,transparent,#000 3.5%,#000 96.5%,transparent);mask-image:linear-gradient(90deg,transparent,#000 3.5%,#000 96.5%,transparent);}
+.strip{display:flex;gap:22px;overflow-x:auto;overflow-y:hidden;padding:6px 4px 14px;scroll-snap-type:x proximity;cursor:grab;scrollbar-width:none;-ms-overflow-style:none;}
+.strip::-webkit-scrollbar{display:none;}
+.strip.drag{cursor:grabbing;}
+.pcard{flex:0 0 auto;width:172px;scroll-snap-align:start;cursor:pointer;transition:transform .25s;}
+.pcard .frame{padding:7px;transform:none;box-shadow:0 12px 26px rgba(0,0,0,.5);}
+.pcard:hover{transform:translateY(-6px);}
+.pcard:hover .frame{box-shadow:0 18px 34px rgba(0,0,0,.6),0 0 46px 8px rgba(255,186,112,.4);}
+.pcard .frame img{display:block;width:100%;height:210px;object-fit:cover;pointer-events:none;}
+.pcard .cap{position:relative;margin-top:20px;background:var(--paper);border:3px solid #241b13;border-radius:14px;padding:9px 12px;color:#2a2119;transform:rotate(-1deg);}
+.pcard .cap::before{content:'';position:absolute;top:-16px;left:22px;width:0;height:0;border:8px solid transparent;border-bottom-color:#241b13;}
+.pcard .cap::after{content:'';position:absolute;top:-11px;left:24px;width:0;height:0;border:6px solid transparent;border-bottom-color:var(--paper);}
+.pcard .cap .t{font-weight:800;font-size:14px;line-height:1.15;}
+.pcard .cap .m{font-size:11px;letter-spacing:1.5px;color:#8a6f4a;margin-top:3px;}
+.about{display:grid;grid-template-columns:1fr;gap:26px;max-width:720px;}
+.about p{font-family:'Noto Sans JP',sans-serif;font-size:15px;line-height:1.9;color:#e7dcc8;}
+.about .contact a{color:var(--warm);font-weight:700;text-decoration:none;}
+.foot{text-align:center;padding:80px 26px 60px;}
+.foot .big{font-weight:800;font-size:clamp(26px,5vw,40px);margin-bottom:24px;}
+.foot .sub{display:flex;gap:22px;justify-content:center;flex-wrap:wrap;margin-top:30px;font-size:12px;letter-spacing:2px;color:#a08d70;}
+.foot .sub a{color:#a08d70;text-decoration:none;}
+.foot .sub a:hover{color:var(--warm);}
+.marquee{overflow:hidden;border-top:1px solid rgba(181,130,78,.22);border-bottom:1px solid rgba(181,130,78,.22);padding:14px 0;background:rgba(20,14,8,.35);}
+.marquee .track{display:flex;width:max-content;animation:mq 34s linear infinite;}
+.marquee .track span{font-weight:800;font-size:17px;letter-spacing:3px;color:#b7a488;white-space:nowrap;}
+@keyframes mq{to{transform:translateX(-50%);}}
+.feature{display:grid;grid-template-columns:1fr;gap:32px;align-items:center;}
+.feature .fimg{background:var(--paper);padding:10px;border:8px solid var(--wood);box-shadow:0 24px 55px rgba(0,0,0,.6),0 0 70px 12px rgba(255,186,112,.18);align-self:start;transition:box-shadow .3s;}
+.feature .fimg:hover{box-shadow:0 24px 55px rgba(0,0,0,.6),0 0 90px 16px rgba(255,196,120,.4);}
+.feature .fimg img{display:block;width:100%;height:auto;max-height:540px;object-fit:cover;}
+.mediums{display:flex;flex-wrap:wrap;gap:12px;}
+.mediums .chip{border:2px solid var(--wood);color:#e7dcc8;padding:8px 16px;font-size:12px;letter-spacing:2px;font-weight:700;}
+@media(min-width:760px){.feature{grid-template-columns:1.05fr 0.95fr;}}
+.overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(8,5,3,.85);z-index:60;padding:20px;}
+.overlay.open{display:flex;}
+.sheet{background:var(--paper);border:8px solid var(--wood);max-width:940px;width:100%;max-height:92vh;overflow:auto;display:flex;box-shadow:0 30px 80px rgba(0,0,0,.7);}
+.sheet .artbox{flex:1.2;min-width:0;background:#2a2119;display:flex;align-items:center;justify-content:center;}
+.sheet .artbox img{width:100%;height:100%;object-fit:cover;display:block;}
+.sheet .artbox svg{width:100%;display:block;}
+.sheet .info{flex:1;padding:30px 32px;min-width:0;color:var(--ink);}
+.chapno{font-family:'Noto Sans JP',sans-serif;font-weight:900;font-size:16px;color:var(--warm);}
+.sheet h3{font-weight:800;font-size:28px;margin:8px 0 6px;line-height:1.1;}
+.sheet .meta{font-size:12px;letter-spacing:2px;color:#7a6a52;margin-bottom:16px;}
+.sheet .desc{font-family:'Noto Sans JP',sans-serif;font-size:14px;line-height:1.8;color:#3a2f22;}
+.btnrow{display:flex;gap:10px;margin-top:24px;flex-wrap:wrap;}
+.btnrow button{background:var(--paper);border:3px solid var(--wood);color:var(--ink);font-family:'Syne',sans-serif;font-weight:700;font-size:12px;letter-spacing:2px;padding:10px 16px;cursor:pointer;}
+.btnrow button:hover:not(:disabled){background:var(--warm);border-color:var(--warm);color:#fff;}
+.btnrow button:disabled{opacity:.3;cursor:default;}
+.sfx{position:fixed;z-index:70;pointer-events:none;font-family:'Noto Sans JP',sans-serif;font-weight:900;color:var(--paper);-webkit-text-stroke:4px #17110b;paint-order:stroke;font-size:clamp(52px,11vw,120px);white-space:nowrap;line-height:1;opacity:0;transform:translate(-50%,-50%) scale(.2) rotate(var(--r,0deg));text-shadow:7px 7px 0 rgba(200,78,38,.92);}
+.sfx.go{animation:sfxpop .82s cubic-bezier(.2,1.4,.4,1) forwards;}
+@keyframes sfxpop{0%{opacity:0;transform:translate(-50%,-50%) scale(.2) rotate(var(--r,0deg));}22%{opacity:1;transform:translate(-50%,-50%) scale(1.16) rotate(var(--r,0deg));}38%{transform:translate(-50%,-50%) scale(1) rotate(var(--r,0deg));}100%{opacity:0;transform:translate(-50%,-54%) scale(1.28) rotate(var(--r,0deg));}}
+@media (max-width:760px){nav.links a:not(.cta){display:none;}.sheet{flex-direction:column;}.sheet .artbox{border-bottom:6px solid var(--wood);}}
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="brand" id="brand">JACK<span>.</span></div>
+  <nav class="links">
+    <a href="#work">WORK</a>
+    <a href="#about">ABOUT</a>
+    <a class="cta" href="lobby.html">ENTER GALLERY →</a>
+  </nav>
+</header>
+
+<div class="hero">
+  <a class="spin-scene" href="lobby.html" aria-label="enter the gallery — featured works rotate">
+    <div id="frame3d"></div>
+  </a>
+  <div class="jp" id="jp"></div>
+  <h1 id="name"></h1>
+  <div class="tag" id="tag"></div>
+  <a class="enter" href="lobby.html">ENTER THE GALLERY &rarr;</a>
+  <a class="chev" href="#work">scroll ↓</a>
+</div>
+
+<section id="work">
+  <div class="shead"><h2>Selected work</h2><span class="en">作品</span><span class="hint">drag / scroll →</span></div>
+  <div class="swrap"><div class="strip" id="grid"></div></div>
+</section>
+
+<div class="marquee"><div class="track" id="mqtrack"></div></div>
+
+<section id="featured">
+  <div class="shead"><h2>Featured</h2><span class="en">注目</span></div>
+  <div class="feature">
+    <div class="fimg" id="fimg" style="cursor:pointer"><img alt=""></div>
+    <div class="ftext">
+      <div id="fchap" style="font-family:'Noto Sans JP',sans-serif;font-weight:900;font-size:16px;color:var(--warm);"></div>
+      <h3 id="ftitle" style="font-weight:800;font-size:clamp(24px,4vw,36px);margin:6px 0 8px;color:var(--paper);line-height:1.1;"></h3>
+      <div id="fmeta" style="font-size:12px;letter-spacing:2px;color:#a08d70;margin-bottom:18px;"></div>
+      <p id="fdesc" style="font-family:'Noto Sans JP',sans-serif;font-size:15px;line-height:1.9;color:#e7dcc8;"></p>
+      <a class="enter" href="lobby.html" style="margin-top:22px;">SEE IT IN THE GALLERY &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<section id="media">
+  <div class="shead"><h2>Media</h2><span class="en">画材</span></div>
+  <div class="mediums" id="mediums"></div>
+</section>
+
+<section id="about">
+  <div class="shead"><h2>About</h2><span class="en" id="jp2"></span></div>
+  <div class="about">
+    <p id="aboutText"></p>
+    <div class="contact" id="contact"></div>
+  </div>
+</section>
+
+<div class="foot">
+  <div class="big">Step inside the gallery.</div>
+  <a class="enter" href="lobby.html">ENTER THE GALLERY &rarr;</a>
+  <div class="sub">
+    <a href="manga.html">2D manga version</a>
+    <span id="footContact"></span>
+    <span id="footName"></span>
+  </div>
+</div>
+
+<div class="overlay" id="lb"><div class="sheet" id="lbsheet"></div></div>
+
+<script src="three.min.js"></script>
+<script src="works-school.js"></script>
+<script src="works-personal.js"></script>
+<script src="works-sketchbook.js"></script>
+<script src="works-projects.js"></script>
+<script src="works.js"></script>
+<script>
+(function(){
+  var N=WORKS.length;
+  document.title=SITE.name+' — Illustration';
+  document.getElementById('brand').innerHTML=(SITE.name.split(' ')[0]||'JACK').toUpperCase()+'<span>.</span>';
+  document.getElementById('jp').textContent=SITE.jpName||'';
+  document.getElementById('jp2').textContent=SITE.jpName||'';
+  document.getElementById('name').textContent=(SITE.name||'').toUpperCase();
+  document.getElementById('tag').textContent=SITE.tagline||'';
+  document.getElementById('aboutText').textContent=SITE.about||'';
+  document.getElementById('footName').textContent='© '+SITE.name;
+
+  /* --- hero: a real 3D beveled wooden picture frame (Three.js) that spins and cycles the art --- */
+  (function(){
+    var mount=document.getElementById('frame3d');
+    var reduced=(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    var imgs=WORKS.filter(function(w){return w.image;}).map(function(w){return w.image;});
+    if(!imgs.length) imgs=[''];
+    if(typeof THREE==='undefined' || !mount){
+      if(mount && imgs[0]) mount.innerHTML='<div class="frame" style="width:210px;max-width:60vw;margin:26px auto 0;"><img src="'+imgs[0]+'" style="display:block;width:100%;height:270px;object-fit:cover;" alt=""></div>';
+      return;
+    }
+    var W=mount.clientWidth||320, H=mount.clientHeight||430;
+    var renderer=new THREE.WebGLRenderer({antialias:true, alpha:true});
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.75));
+    renderer.setSize(W,H); renderer.setClearColor(0x000000,0);
+    if('outputColorSpace' in renderer) renderer.outputColorSpace=THREE.SRGBColorSpace;
+    mount.appendChild(renderer.domElement);
+    var scene=new THREE.Scene();
+    var camera=new THREE.PerspectiveCamera(34, W/H, 0.1, 100); camera.position.set(0,0.15,6.2); camera.lookAt(0,0,0);
+    scene.add(new THREE.AmbientLight(0xffe6c0, 0.75));
+    var key=new THREE.DirectionalLight(0xfff1d4, 2.3); key.position.set(3,4.5,5); scene.add(key);
+    var fill=new THREE.DirectionalLight(0xffb060, 0.7); fill.position.set(-4,-1,3); scene.add(fill);
+
+    function rr(p,x,y,w,h,r){ p.moveTo(x+r,y); p.lineTo(x+w-r,y); p.quadraticCurveTo(x+w,y,x+w,y+r); p.lineTo(x+w,y+h-r); p.quadraticCurveTo(x+w,y+h,x+w-r,y+h); p.lineTo(x+r,y+h); p.quadraticCurveTo(x,y+h,x,y+h-r); p.lineTo(x,y+r); p.quadraticCurveTo(x,y,x+r,y); }
+    var FW=2.0, FH=2.7, border=0.1, depth=0.13, matPad=0.085;
+    var shape=new THREE.Shape(); rr(shape,-FW/2,-FH/2,FW,FH,0.015);
+    var hole=new THREE.Path(); rr(hole,-FW/2+border,-FH/2+border,FW-2*border,FH-2*border,0.008); shape.holes.push(hole);
+    var geo=new THREE.ExtrudeGeometry(shape,{depth:depth,bevelEnabled:true,bevelThickness:0.018,bevelSize:0.018,bevelSegments:1,curveSegments:4});
+    geo.translate(0,0,-depth/2);
+    var group=new THREE.Group();
+    group.add(new THREE.Mesh(geo, new THREE.MeshStandardMaterial({color:0x6b4a2f,roughness:0.55,metalness:0.18})));
+    scene.add(group);
+
+    var openW=FW-2*border, openH=FH-2*border, artW=openW-matPad*2, artH=openH-matPad*2;
+    var matMaterial=new THREE.MeshStandardMaterial({color:0xefe6d3,roughness:1});
+    function side(dir){ var mat=new THREE.Mesh(new THREE.PlaneGeometry(openW,openH),matMaterial); mat.position.z=dir*(depth/2+0.001); if(dir<0)mat.rotation.y=Math.PI; group.add(mat);
+      var am=new THREE.MeshBasicMaterial({color:0xefe6d3}); var mesh=new THREE.Mesh(new THREE.PlaneGeometry(artW,artH),am); mesh.position.z=dir*(depth/2+0.004); if(dir<0)mesh.rotation.y=Math.PI; group.add(mesh); return am; }
+    var frontArt=side(1), backArt=side(-1);
+
+    var texCache={}, nextI=0;
+    function loadTex(src,cb){ if(texCache[src])return cb(texCache[src]); var img=new Image();
+      img.onload=function(){ var c=document.createElement('canvas'),md=760,s=Math.min(1,md/Math.max(img.width,img.height)); c.width=Math.max(2,Math.round(img.width*s)); c.height=Math.max(2,Math.round(img.height*s)); try{c.getContext('2d').drawImage(img,0,0,c.width,c.height);}catch(e){return cb(null);} var t=new THREE.CanvasTexture(c); if('colorSpace'in t)t.colorSpace=THREE.SRGBColorSpace; t.anisotropy=4; texCache[src]=t; cb(t); };
+      img.onerror=function(){cb(null);}; img.src=src; }
+    function setArt(m){ var src=imgs[nextI%imgs.length]; nextI++; if(!src)return; loadTex(src,function(t){ if(!t)return; var pa=artW/artH, ia=t.image.width/t.image.height; t.repeat.set(1,1); t.offset.set(0,0); if(ia>pa){t.repeat.x=pa/ia;t.offset.x=(1-t.repeat.x)/2;}else{t.repeat.y=ia/pa;t.offset.y=(1-t.repeat.y)/2;} m.map=t; m.color.setHex(0xffffff); m.needsUpdate=true; }); }
+    setArt(frontArt); setArt(backArt);
+
+    var ang=0, prev=0, SPEED=0.012;
+    function loop(){ requestAnimationFrame(loop); if(document.hidden)return; prev=ang; ang=(ang+SPEED)%(Math.PI*2); group.rotation.y=ang;
+      if(prev<Math.PI/2 && ang>=Math.PI/2) setArt(frontArt);
+      if(prev<Math.PI*1.5 && ang>=Math.PI*1.5) setArt(backArt);
+      renderer.render(scene,camera); }
+    if(reduced){ renderer.render(scene,camera); } else { loop(); }
+    window.addEventListener('resize',function(){ var w=mount.clientWidth,h=mount.clientHeight; if(!w||!h)return; camera.aspect=w/h; camera.updateProjectionMatrix(); renderer.setSize(w,h); renderer.render(scene,camera); });
+  })();
+
+  var contact='';
+  if(SITE.email) contact+='<a href="mailto:'+SITE.email+'">'+SITE.email+'</a>';
+  if(SITE.instagram) contact+=(contact?' &nbsp; · &nbsp; ':'')+'<a href="'+SITE.instagram+'" target="_blank" rel="noopener">Instagram</a>';
+  if(contact){ document.getElementById('contact').innerHTML='<p style="font-size:14px;letter-spacing:1px;">'+contact+'</p>'; document.getElementById('footContact').innerHTML=contact; }
+
+  function art(w){ if(w.image) return '<img src="'+w.image+'" alt="'+(w.title||'').replace(/"/g,'&quot;')+'" loading="lazy">'; return '<div style="padding:40px;color:#c9b79a;font-weight:800;">'+(w.title||'').toUpperCase()+'</div>'; }
+
+  var SFX=['ドン！','バン！','ドドド','ゴゴゴ','バキ！','ズバッ','ドカ！','ガシャーン','ドーン','ズドン','パッ'];
+  function sfxBurst(x,y){
+    if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var el=document.createElement('div'); el.className='sfx';
+    el.textContent=SFX[Math.floor(Math.random()*SFX.length)];
+    el.style.setProperty('--r',(Math.random()*24-12).toFixed(1)+'deg');
+    el.style.left=(x!=null?x:window.innerWidth/2)+'px';
+    el.style.top=(y!=null?y:window.innerHeight*0.42)+'px';
+    document.body.appendChild(el);
+    void el.offsetWidth; el.classList.add('go');
+    setTimeout(function(){ if(el.parentNode) el.parentNode.removeChild(el); },850);
+  }
+
+  var strip=document.getElementById('grid'), dragMoved=false;
+  WORKS.forEach(function(w,i){
+    var c=document.createElement('div'); c.className='pcard';
+    c.innerHTML='<div class="frame">'+art(w)+'</div><div class="cap"><div class="t">'+w.title+'</div><div class="m">'+(w.medium||'').toUpperCase()+(w.date?' · '+w.date:'')+'</div></div>';
+    c.addEventListener('click',function(e){ if(!dragMoved){ sfxBurst(e.clientX,e.clientY); openLB(i); } });
+    strip.appendChild(c);
+  });
+  var sdown=false, sx=0, sl=0;
+  strip.addEventListener('pointerdown',function(e){ sdown=true; dragMoved=false; sx=e.clientX; sl=strip.scrollLeft; strip.classList.add('drag'); });
+  window.addEventListener('pointermove',function(e){ if(!sdown)return; var dx=e.clientX-sx; if(Math.abs(dx)>4) dragMoved=true; strip.scrollLeft=sl-dx; });
+  window.addEventListener('pointerup',function(){ sdown=false; strip.classList.remove('drag'); });
+  strip.addEventListener('wheel',function(e){ if(Math.abs(e.deltaY)>Math.abs(e.deltaX)){ strip.scrollLeft+=e.deltaY; e.preventDefault(); } },{passive:false});
+
+  /* marquee of titles */
+  var mqline=WORKS.map(function(w){return w.title;}).join('  ✦  ')+'  ✦  ';
+  var mqEl=document.getElementById('mqtrack'); if(mqEl) mqEl.innerHTML='<span>'+mqline+'</span><span>'+mqline+'</span>';
+  /* featured piece (first real work) */
+  var feat=null, featIdx=0; for(var fi=0;fi<N;fi++){ if(WORKS[fi].image){ feat=WORKS[fi]; featIdx=fi; break; } }
+  if(feat){ var fimg=document.getElementById('fimg'); fimg.querySelector('img').src=feat.image; fimg.querySelector('img').alt=feat.title||'';
+    fimg.addEventListener('click',function(){ openLB(featIdx); });
+    document.getElementById('fchap').textContent='第'+(featIdx+1)+'話';
+    document.getElementById('ftitle').textContent=feat.title;
+    document.getElementById('fmeta').textContent=(feat.medium||'').toUpperCase()+(feat.date?' · '+feat.date:'');
+    document.getElementById('fdesc').textContent=feat.description||''; }
+  /* media chips (real mediums only) */
+  var meds=[]; WORKS.forEach(function(w){ var m=w.medium||''; if(m && !/demo/i.test(m) && meds.indexOf(m)<0) meds.push(m); });
+  var mcEl=document.getElementById('mediums'); if(mcEl) meds.forEach(function(m){ var c=document.createElement('span'); c.className='chip'; c.textContent=m; mcEl.appendChild(c); });
+
+  var lb=document.getElementById('lb'), sheet=document.getElementById('lbsheet');
+  function openLB(i){ var w=WORKS[i];
+    sheet.innerHTML='<div class="artbox">'+art(w)+'</div><div class="info"><div class="chapno">第'+(i+1)+'話</div><h3>'+w.title+'</h3>'+
+      '<div class="meta">'+(w.medium||'').toUpperCase()+(w.date?' · '+w.date:'')+'</div><p class="desc">'+(w.description||'')+'</p>'+
+      '<div class="btnrow"><button id="lprev" '+(i===0?'disabled':'')+'>&larr; PREV</button><button id="lnext" '+(i===N-1?'disabled':'')+'>NEXT &rarr;</button><button id="lclose">CLOSE ✕</button></div></div>';
+    lb.classList.add('open'); lb._i=i;
+    document.getElementById('lclose').onclick=closeLB;
+    document.getElementById('lprev').onclick=function(){ sfxBurst(); openLB(i-1); };
+    document.getElementById('lnext').onclick=function(){ sfxBurst(); openLB(i+1); };
+  }
+  function closeLB(){ lb.classList.remove('open'); }
+  lb.addEventListener('click',function(e){ if(e.target===lb) closeLB(); });
+  window.addEventListener('keydown',function(e){
+    if(!lb.classList.contains('open')) return;
+    if(e.key==='Escape') closeLB();
+    if(e.key==='ArrowLeft'&&lb._i>0) openLB(lb._i-1);
+    if(e.key==='ArrowRight'&&lb._i<N-1) openLB(lb._i+1);
+  });
+})();
+</script>
+</body>
+</html>

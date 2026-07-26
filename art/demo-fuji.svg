@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 900"><rect width="800" height="900" fill="#2B2144"/>
+<rect y="0" width="800" height="240" fill="#2B2144"/><rect y="240" width="800" height="140" fill="#6E3A63"/><rect y="380" width="800" height="110" fill="#C75B54"/><rect y="490" width="800" height="90" fill="#EFA45B"/>
+<circle cx="580" cy="420" r="70" fill="#E4B04A"/>
+<path d="M-40 900 L400 300 L840 900 Z" fill="#1D1A2E"/>
+<path d="M400 300 L500 440 L455 425 L430 455 L400 430 L370 455 L345 425 L300 440 Z" fill="#F7F4EC"/>
+<path d="M140 170 q12 -14 24 0 q12 -14 24 0" stroke="#141414" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M210 194 q12 -14 24 0 q12 -14 24 0" stroke="#141414" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M280 218 q12 -14 24 0 q12 -14 24 0" stroke="#141414" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M350 170 q12 -14 24 0 q12 -14 24 0" stroke="#141414" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M420 194 q12 -14 24 0 q12 -14 24 0" stroke="#141414" stroke-width="5" fill="none" stroke-linecap="round"/>
+<rect y="580" width="800" height="320" fill="#141225"/></svg>
