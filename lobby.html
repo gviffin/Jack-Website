@@ -726,7 +726,7 @@ function addFurn(key,x,z,rot){ var it=FURN_BY_KEY[key]; if(!it) return null; var
   root.position.set(x,0,z); root.rotation.y=rot||0; applyToon(root); scene.add(root);
   var rec={root:root,key:key}; root.userData.furnRoot=rec; placed.push(rec); return rec; }
 function ndc(cx,cy){ return new THREE.Vector2((cx/window.innerWidth)*2-1, -(cy/window.innerHeight)*2+1); }
-function floorAt(cx,cy){ ray.setFromCamera(ndc(cx,cy),camera); var p=ray.ray.intersectPlane(floorPlane,_fpt); return p?{x:p.x,z:p.z}:null; }
+function floorAt(cx,cy){ ray.setFromCamera(ndc(cx,cy),camera); var p=ray.ray.intersectPlane(floorPlane,_fpt); if(!p||p.distanceTo(camera.position)>26) return null; return {x:p.x,z:p.z}; }
 function furnAt(cx,cy){ if(!placed.length) return null; ray.setFromCamera(ndc(cx,cy),camera);
   var hits=ray.intersectObjects(placed.map(function(f){return f.root;}),true); if(!hits.length) return null;
   var o=hits[0].object; while(o){ if(o.userData&&o.userData.furnRoot) return o.userData.furnRoot; o=o.parent; } return null; }
@@ -744,7 +744,9 @@ function edDown(e){ edDownXY=[e.clientX,e.clientY]; edLX=e.clientX; edLY=e.clien
   else { edLook=true; } }
 function edMove(e){ if(Math.abs(e.clientX-edDownXY[0])>4||Math.abs(e.clientY-edDownXY[1])>4) edMovedFlag=true;
   if(edDragging && selFurn){ var fp=floorAt(e.clientX,e.clientY); if(fp){ var nx=fp.x+edOffset.x, nz=fp.z+edOffset.z;
-      if(inRoom(nx,selFurn.root.position.z)) selFurn.root.position.x=nx;
+      var cxp=selFurn.root.position.x, czp=selFurn.root.position.z, ddx=nx-cxp, ddz=nz-czp, dd=Math.hypot(ddx,ddz), MAX=1.4;
+      if(dd>MAX){ nx=cxp+ddx/dd*MAX; nz=czp+ddz/dd*MAX; }        // clamp per-move jump so it follows smoothly, never teleports
+      if(inRoom(nx,czp)) selFurn.root.position.x=nx;
       if(inRoom(selFurn.root.position.x,nz)) selFurn.root.position.z=nz;
       if(selBox)selBox.update(); positionCtl(); } return; }
   if(edLook){ var dx=e.clientX-edLX, dy=e.clientY-edLY; edLX=e.clientX; edLY=e.clientY;
