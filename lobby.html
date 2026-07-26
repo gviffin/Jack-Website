@@ -51,6 +51,10 @@ html,body{margin:0;height:100%;background:#0e0b08;overflow:hidden;font-family:'S
 #app.locked ~ #cross{opacity:1;}
 #tip{position:fixed;left:50%;top:52%;transform:translateX(-50%);z-index:16;color:#efe6d3;font-weight:700;letter-spacing:2px;font-size:13px;background:rgba(20,14,9,.7);padding:12px 20px;border:1px solid #7a5a34;border-radius:10px;text-align:center;text-shadow:0 2px 8px #000;transition:opacity .5s;}
 #loading{position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;background:#0e0b08;color:#c9b79a;font-weight:800;letter-spacing:3px;font-size:14px;transition:opacity .6s;}
+#joy{position:fixed;left:24px;bottom:26px;width:118px;height:118px;z-index:30;display:none;touch-action:none;-webkit-user-select:none;user-select:none;}
+body.touch #joy{display:block;}
+#joy .jr{position:absolute;inset:0;pointer-events:none;overflow:visible;}
+#joyknob{position:absolute;left:50%;top:50%;width:50px;height:50px;margin:-25px 0 0 -25px;border-radius:50%;background:rgba(200,112,58,.5);border:2px solid rgba(240,230,211,.75);box-shadow:0 4px 14px rgba(0,0,0,.5);pointer-events:none;}
 .overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(8,5,3,.82);z-index:50;padding:26px;-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);}
 .overlay.open{display:flex;}
 .overlay .sheet{background:#171009;border:1px solid rgba(230,180,110,.3);border-radius:16px;box-shadow:0 34px 80px rgba(0,0,0,.72),0 0 44px rgba(230,150,70,.12);max-width:920px;width:100%;max-height:90vh;overflow:hidden;display:flex;}
@@ -142,6 +146,8 @@ html,body{margin:0;height:100%;background:#0e0b08;overflow:hidden;font-family:'S
 <div class="hdr" id="areaind"></div>
 <div class="hdr" id="hint">W A S D MOVE · Q E TURN · R F LOOK UP/DOWN · SHIFT RUN</div>
 <div id="tip"><b>W A S D</b> to move · <b>Q</b> / <b>E</b> to turn · <span style="opacity:.7">click a piece to view it</span></div>
+
+<div id="joy" aria-hidden="true"><div id="joyknob"></div></div>
 
 <div class="overlay" id="info" role="dialog" aria-modal="true">
   <button class="ovclose" id="infoclose" aria-label="close">✕</button>
@@ -582,15 +588,35 @@ var dragging=false,lx=0,ly=0,downX=0,downY=0,moved=false;
 var ray=new THREE.Raycaster();
 function pickAt(cx,cy){ ray.setFromCamera(new THREE.Vector2((cx/window.innerWidth)*2-1, -(cy/window.innerHeight)*2+1), camera);
   var hits=ray.intersectObjects(pickable,false); return hits.length?hits[0].object.userData.work:null; }
-cv.addEventListener('pointerdown',function(e){ if(editMode){ edDown(e); return; } if(uiOpen) return; dragging=true; lx=e.clientX; ly=e.clientY; downX=e.clientX; downY=e.clientY; moved=false; hideTip(); });
-window.addEventListener('pointerup',function(e){ if(editMode){ edUp(e); return; } if(dragging && !moved && !uiOpen){ var w=pickAt(downX,downY); if(w) openInfo(w); } dragging=false; });
-window.addEventListener('pointercancel',function(){ dragging=false; edDragging=false; });
+var lookId=null;
+cv.addEventListener('pointerdown',function(e){ if(editMode){ edDown(e); return; } if(uiOpen) return; dragging=true; lookId=e.pointerId; lx=e.clientX; ly=e.clientY; downX=e.clientX; downY=e.clientY; moved=false; hideTip(); });
+window.addEventListener('pointerup',function(e){ if(editMode){ edUp(e); return; } if(e.pointerId!==lookId) return; if(dragging && !moved && !uiOpen){ var w=pickAt(downX,downY); if(w) openInfo(w); } dragging=false; lookId=null; });
+window.addEventListener('pointercancel',function(e){ if(e.pointerId===lookId){ dragging=false; lookId=null; } edDragging=false; });
 window.addEventListener('pointermove',function(e){ if(editMode){ edMove(e); return; }
   if(!dragging){ if(!uiOpen) cv.style.cursor=pickAt(e.clientX,e.clientY)?'pointer':'grab'; return; }
+  if(e.pointerId!==lookId) return;                              // ignore other fingers (e.g. the joystick)
   if(Math.abs(e.clientX-downX)>6||Math.abs(e.clientY-downY)>6) moved=true;
   var dx=e.clientX-lx, dy=e.clientY-ly; lx=e.clientX; ly=e.clientY;
   if(Math.abs(dx)>220||Math.abs(dy)>220) return;               // ignore spurious spikes
   yaw-=dx*SET.lookSens; pit-=dy*SET.lookSens; pit=Math.max(-1.05,Math.min(1.05,pit)); });
+/* ================= mobile joystick + swipe-look ================= */
+var joyVec={x:0,y:0}, joyId=null, joyC={x:0,y:0}, JOYR=44;
+var IS_TOUCH=('ontouchstart' in window)||(navigator.maxTouchPoints>0);
+(function(){
+  var joy=document.getElementById('joy'), knob=document.getElementById('joyknob'); if(!joy) return;
+  if(IS_TOUCH){ document.body.classList.add('touch');
+    if(typeof rough!=='undefined'){ var svg=document.createElementNS('http://www.w3.org/2000/svg','svg'); svg.setAttribute('class','jr'); svg.setAttribute('width',118); svg.setAttribute('height',118); joy.insertBefore(svg,knob);
+      svg.appendChild(rough.svg(svg).circle(59,59,112,{roughness:2,stroke:'#cdb994',strokeWidth:2,fill:'rgba(20,14,9,0.4)',fillStyle:'solid'})); }
+    var hint=document.getElementById('hint'); if(hint) hint.textContent='DRAG STICK TO MOVE · SWIPE TO LOOK · TAP A PIECE';
+    var tip=document.getElementById('tip'); if(tip) tip.innerHTML='<b>Drag</b> the stick to move · <b>swipe</b> to look';
+  }
+  function setKnob(dx,dy){ knob.style.transform='translate('+dx+'px,'+dy+'px)'; }
+  function start(e){ e.preventDefault(); e.stopPropagation(); joyId=e.pointerId; var r=joy.getBoundingClientRect(); joyC.x=r.left+r.width/2; joyC.y=r.top+r.height/2; try{joy.setPointerCapture(e.pointerId);}catch(_){} move(e); }
+  function move(e){ if(e.pointerId!==joyId) return; var dx=e.clientX-joyC.x, dy=e.clientY-joyC.y, d=Math.hypot(dx,dy); if(d>JOYR){ dx*=JOYR/d; dy*=JOYR/d; } setKnob(dx,dy); joyVec.x=dx/JOYR; joyVec.y=dy/JOYR; }
+  function end(e){ if(e.pointerId!==joyId) return; joyId=null; joyVec.x=0; joyVec.y=0; setKnob(0,0); }
+  joy.addEventListener('pointerdown',start); joy.addEventListener('pointermove',move); joy.addEventListener('pointerup',end); joy.addEventListener('pointercancel',end);
+})();
+
 /* ---- artwork info panel ---- */
 function openInfo(w){ if(!w) return; uiOpen=true; for(var kk in keys) keys[kk]=false; dragging=false;
   var img = w.image ? '<img src="'+w.image+'" alt="'+(w.title||'')+'">' : '<div class="ph">'+(w.title||'').toUpperCase()+'</div>';
@@ -812,6 +838,7 @@ function animate(){ requestAnimationFrame(animate); if(document.hidden) return;
     if(down('back') ||keys['arrowdown']) { mx-=fx; mz-=fz; }
     if(down('right')||keys['arrowright']){ mx+=rx; mz+=rz; }
     if(down('left') ||keys['arrowleft']) { mx-=rx; mz-=rz; }
+    if(joyId!==null && (Math.abs(joyVec.x)>0.12||Math.abs(joyVec.y)>0.12)){ mx += fx*(-joyVec.y)+rx*joyVec.x; mz += fz*(-joyVec.y)+rz*joyVec.x; }
     var ml=Math.hypot(mx,mz); if(ml>0){ mx/=ml; mz/=ml; var nx=camera.position.x+mx*sp, nz=camera.position.z+mz*sp;
       if(inBounds(nx,camera.position.z)) camera.position.x=nx;
       if(inBounds(camera.position.x,nz)) camera.position.z=nz; }
